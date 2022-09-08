@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Categorias from '../components/Categorias';
 
 export default class Home extends Component {
   state = {
@@ -20,7 +21,7 @@ export default class Home extends Component {
             Carrinho
           </button>
         </Link>
-
+        <Categorias />
         {paginaVazia && (
           <p
             data-testid="home-initial-message"
