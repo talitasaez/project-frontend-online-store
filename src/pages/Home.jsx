@@ -1,19 +1,30 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Categorias from '../components/Categorias';
+import Pesquisa from '../components/Pesquisa';
+import Produtos from '../components/Produtos';
+import { getProductsFromCategoryAndQuery } from '../services/api';
 
 export default class Home extends Component {
   state = {
-    paginaVazia: true,
+    produtos: [],
+    foiPesquisado: false,
+  };
+
+  handleSearch = async (categoryId, query) => {
+    const fetchSearch = await getProductsFromCategoryAndQuery(categoryId, query);
+    this.setState({
+      produtos: fetchSearch.results,
+      foiPesquisado: true,
+    });
   };
 
   render() {
-    const { paginaVazia } = this.state;
+    const { produtos, foiPesquisado } = this.state;
 
     return (
       <>
-        <input type="text" />
-
+        <Pesquisa handleSearch={ this.handleSearch } />
         <Link to="/cart" data-testid="shopping-cart-button">
           <button
             type="button"
@@ -22,7 +33,8 @@ export default class Home extends Component {
           </button>
         </Link>
         <Categorias />
-        {paginaVazia && (
+        {foiPesquisado && <Produtos produtos={ produtos } />}
+        {!foiPesquisado && (
           <p
             data-testid="home-initial-message"
           >
