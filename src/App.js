@@ -1,11 +1,15 @@
 import React from 'react';
-import * as api from './services/api';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Home from './pages/Home';
+// import * as api from './services/api';
 
 function App() {
   return (
-    <>
-      {api.getCategories()}
-    </>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/"><Home /></Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
