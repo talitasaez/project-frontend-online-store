@@ -18,6 +18,7 @@ export default class ProdutoDetalhado extends Component {
 
   render() {
     const { produto } = this.state;
+    const { adicionarAoCarrinho } = this.props;
 
     return (
       <div>
@@ -28,13 +29,21 @@ export default class ProdutoDetalhado extends Component {
           data-testid="product-detail-image"
         />
         <h3 data-testid="product-detail-price">{ produto.price }</h3>
-        <Link to="/cart" data-testid="shopping-cart-button">
+        <Link to="/cart">
           <button
+            data-testid="shopping-cart-button"
             type="button"
           >
             Carrinho
           </button>
         </Link>
+        <button
+          data-testid="product-detail-add-to-cart"
+          type="button"
+          onClick={ () => adicionarAoCarrinho(produto) }
+        >
+          Adicionar ao carrinho
+        </button>
       </div>
     );
   }
@@ -46,4 +55,5 @@ ProdutoDetalhado.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  adicionarAoCarrinho: PropTypes.func.isRequired,
 };
