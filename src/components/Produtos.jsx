@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes, { shape } from 'prop-types';
+import '../styles/Produtos.css';
+import { Link } from 'react-router-dom';
 
 export default class Produtos extends Component {
   render() {
@@ -8,10 +10,13 @@ export default class Produtos extends Component {
       <div>
         {
           produtos.length !== 0 ? produtos.map((a) => (
-            <div data-testid="product" key={ a.id }>
+            <div className="listaDeProdutos" data-testid="product" key={ a.id }>
               <h3>{ a.title }</h3>
               <img src={ a.thumbnail } alt={ a.title } />
               <h3>{ a.price }</h3>
+              <Link to={ `/produto/${a.id}` } data-testid="product-detail-link">
+                <button type="button">Mais detalhes</button>
+              </Link>
             </div>
           )) : <p>Nenhum produto foi encontrado</p>
         }
