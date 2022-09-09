@@ -35,7 +35,15 @@ export default class App extends React.Component {
               />
             ) }
           />
-          <Route path="/cart" component={ ShoppingCart } />
+          <Route
+            path="/cart"
+            render={ (props) => (
+              <ShoppingCart
+                { ...props }
+                adicionarAoCarrinho={ this.adicionarAoCarrinho }
+              />
+            ) }
+          />
           <Route
             path="/produto/:id"
             render={ (props) => (

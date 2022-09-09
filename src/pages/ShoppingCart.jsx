@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class ShoppingCart extends Component {
   state = {
@@ -7,6 +8,10 @@ export default class ShoppingCart extends Component {
   };
 
   componentDidMount() {
+    this.atualizaCarrinho();
+  }
+
+  atualizaCarrinho = () => {
     this.setState({
       produtosNoCarrinho: JSON.parse(localStorage.getItem('produtosNoCarrinho')),
     }, () => {
@@ -24,10 +29,11 @@ export default class ShoppingCart extends Component {
         });
       }
     });
-  }
+  };
 
   render() {
     const { produtosNoCarrinho, filtrar } = this.state;
+    const { adicionarAoCarrinho } = this.props;
 
     return (
       <div>
@@ -40,6 +46,16 @@ export default class ShoppingCart extends Component {
             >
               { produtosNoCarrinho.filter((a) => a.id === e.id).length }
             </span>
+            <button
+              data-testid="product-increase-quantity"
+              type="button"
+              onClick={ () => {
+                adicionarAoCarrinho(e);
+                this.atualizaCarrinho();
+              } }
+            >
+              Adicionar ao carrinho
+            </button>
           </div>
         ))}
         {!produtosNoCarrinho && (
@@ -49,3 +65,6 @@ export default class ShoppingCart extends Component {
     );
   }
 }
+ShoppingCart.propTypes = {
+  adicionarAoCarrinho: PropTypes.func.isRequired,
+};
