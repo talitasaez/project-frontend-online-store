@@ -16,7 +16,7 @@ export default class ShoppingCart extends Component {
 
     return (
       <div>
-        {produtosNoCarrinho.map((e) => (
+        {produtosNoCarrinho && produtosNoCarrinho.map((e) => (
           <div key={ e.id }>
             <h3 data-testid="shopping-cart-product-name">{ e.title }</h3>
             <h4>{ e.price }</h4>
