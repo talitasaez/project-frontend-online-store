@@ -32,7 +32,7 @@ export default class Home extends Component {
             Carrinho
           </button>
         </Link>
-        <Categorias />
+        <Categorias handleSearch={ this.handleSearch } />
         {foiPesquisado && <Produtos produtos={ produtos } />}
         {!foiPesquisado && (
           <p

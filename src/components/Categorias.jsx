@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { getCategories } from '../services/api';
 
 export default class Categorias extends Component {
@@ -17,6 +18,7 @@ export default class Categorias extends Component {
 
   render() {
     const { categorias } = this.state;
+    const { handleSearch } = this.props;
 
     return (
       <div>
@@ -24,7 +26,12 @@ export default class Categorias extends Component {
           categorias.map((e) => (
             <label key={ e.id } htmlFor={ e.id } data-testid="category">
               {e.name}
-              <input type="radio" id={ e.id } name="categoria" />
+              <input
+                type="radio"
+                id={ e.id }
+                name="categoria"
+                onClick={ () => handleSearch(e.id, '') }
+              />
             </label>
 
           ))
@@ -34,3 +41,7 @@ export default class Categorias extends Component {
     );
   }
 }
+
+Categorias.propTypes = {
+  handleSearch: PropTypes.func.isRequired,
+};
