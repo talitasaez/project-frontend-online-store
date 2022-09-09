@@ -25,7 +25,10 @@ export default class Pesquisa extends Component {
         <button
           type="button"
           data-testid="query-button"
-          onClick={ () => handleSearch('', pesquisa) }
+          onClick={ () => {
+            handleSearch('', pesquisa);
+            this.setState({ pesquisa: '' });
+          } }
         >
           Pesquisar
         </button>
