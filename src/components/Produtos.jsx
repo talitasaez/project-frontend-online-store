@@ -4,21 +4,8 @@ import '../styles/Produtos.css';
 import { Link } from 'react-router-dom';
 
 export default class Produtos extends Component {
-  state = {
-    produtosNoCarrinho: [],
-  };
-
-  adicionarAoCarrinho = (produto) => {
-    this.setState((prevState) => ({
-      produtosNoCarrinho: [...prevState.produtosNoCarrinho, produto],
-    }), () => {
-      const { produtosNoCarrinho } = this.state;
-      localStorage.setItem('produtosNoCarrinho', JSON.stringify(produtosNoCarrinho));
-    });
-  };
-
   render() {
-    const { produtos } = this.props;
+    const { produtos, adicionarAoCarrinho } = this.props;
     return (
       <div>
         {
@@ -33,7 +20,7 @@ export default class Produtos extends Component {
               <button
                 data-testid="product-add-to-cart"
                 type="button"
-                onClick={ () => this.adicionarAoCarrinho(a) }
+                onClick={ () => adicionarAoCarrinho(a) }
               >
                 Adicionar ao carrinho
               </button>
@@ -47,4 +34,6 @@ export default class Produtos extends Component {
 
 Produtos.propTypes = {
   produtos: PropTypes.arrayOf(shape()).isRequired,
+  adicionarAoCarrinho: PropTypes.func.isRequired,
+
 };

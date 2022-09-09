@@ -5,16 +5,49 @@ import ProdutoDetalhado from './pages/ProdutoDetalhado';
 import ShoppingCart from './pages/ShoppingCart';
 // import * as api from './services/api';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={ Home } />
-        <Route path="/cart" component={ ShoppingCart } />
-        <Route path="/produto/:id" component={ ProdutoDetalhado } />
-      </Switch>
-    </BrowserRouter>
-  );
-}
+export default class App extends React.Component {
+  state = {
+    produtosNoCarrinho: [],
+  };
 
-export default App;
+  adicionarAoCarrinho = (produto) => {
+    this.setState((prevState) => ({
+      produtosNoCarrinho: [...prevState.produtosNoCarrinho, produto],
+    }), () => {
+      const { produtosNoCarrinho } = this.state;
+      localStorage.setItem('produtosNoCarrinho', JSON.stringify(produtosNoCarrinho));
+    });
+  };
+
+  render() {
+    const { produtosNoCarrinho } = this.state;
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={ (props) => (
+              <Home
+                { ...props }
+                adicionarAoCarrinho={ this.adicionarAoCarrinho }
+                produtosNoCarrinho={ produtosNoCarrinho }
+              />
+            ) }
+          />
+          <Route path="/cart" component={ ShoppingCart } />
+          <Route
+            path="/produto/:id"
+            render={ (props) => (
+              <ProdutoDetalhado
+                { ...props }
+                adicionarAoCarrinho={ this.adicionarAoCarrinho }
+                produtosNoCarrinho={ produtosNoCarrinho }
+              />
+            ) }
+          />
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes, { shape } from 'prop-types';
 import { Link } from 'react-router-dom';
 import Categorias from '../components/Categorias';
 import Pesquisa from '../components/Pesquisa';
@@ -21,7 +22,7 @@ export default class Home extends Component {
 
   render() {
     const { produtos, foiPesquisado } = this.state;
-
+    const { adicionarAoCarrinho, produtosNoCarrinho } = this.props;
     return (
       <>
         <Pesquisa handleSearch={ this.handleSearch } />
@@ -33,7 +34,11 @@ export default class Home extends Component {
           </button>
         </Link>
         <Categorias handleSearch={ this.handleSearch } />
-        {foiPesquisado && <Produtos produtos={ produtos } />}
+        {foiPesquisado && <Produtos
+          produtos={ produtos }
+          adicionarAoCarrinho={ adicionarAoCarrinho }
+          produtosNoCarrinho={ produtosNoCarrinho }
+        />}
         {!foiPesquisado && (
           <p
             data-testid="home-initial-message"
@@ -44,3 +49,9 @@ export default class Home extends Component {
     );
   }
 }
+
+Home.propTypes = {
+  adicionarAoCarrinho: PropTypes.func.isRequired,
+  produtosNoCarrinho:
+  PropTypes.arrayOf(shape([PropTypes.string, PropTypes.number])).isRequired,
+};
