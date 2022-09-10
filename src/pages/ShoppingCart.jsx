@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 export default class ShoppingCart extends Component {
   state = {
-    produtosNoCarrinho: [],
     filtrar: [],
   };
 
@@ -12,39 +11,35 @@ export default class ShoppingCart extends Component {
   }
 
   atualizaCarrinho = () => {
-    this.setState({
-      produtosNoCarrinho: JSON.parse(localStorage.getItem('produtosNoCarrinho')),
-    }, () => {
-      const { produtosNoCarrinho } = this.state;
+    const { pegarProdutos } = this.props;
 
-      if (produtosNoCarrinho) {
-        const setProduto = new Set();
+    if (pegarProdutos) {
+      const setProduto = new Set();
 
-        this.setState({
-          filtrar: produtosNoCarrinho.filter((produto) => {
-            const produtoDuplicado = setProduto.has(produto.id);
-            setProduto.add(produto.id);
-            return !produtoDuplicado;
-          }),
-        });
-      }
-    });
+      this.setState({
+        filtrar: pegarProdutos.filter((produto) => {
+          const produtoDuplicado = setProduto.has(produto.id);
+          setProduto.add(produto.id);
+          return !produtoDuplicado;
+        }),
+      });
+    }
   };
 
   render() {
-    const { produtosNoCarrinho, filtrar } = this.state;
-    const { adicionarAoCarrinho } = this.props;
+    const { filtrar } = this.state;
+    const { adicionarAoCarrinho, pegarProdutos, somarCarrinho } = this.props;
 
     return (
       <div>
-        {produtosNoCarrinho && filtrar.map((e) => (
+        {pegarProdutos && filtrar.map((e) => (
           <div key={ e.id }>
             <h3 data-testid="shopping-cart-product-name">{ e.title }</h3>
             <h4>{ e.price }</h4>
             <span
               data-testid="shopping-cart-product-quantity"
             >
-              { produtosNoCarrinho.filter((a) => a.id === e.id).length }
+              { pegarProdutos.filter((a) => a.id === e.id).length }
             </span>
             <button
               data-testid="product-increase-quantity"
@@ -52,13 +47,14 @@ export default class ShoppingCart extends Component {
               onClick={ () => {
                 adicionarAoCarrinho(e);
                 this.atualizaCarrinho();
+                somarCarrinho();
               } }
             >
               Adicionar ao carrinho
             </button>
           </div>
         ))}
-        {!produtosNoCarrinho && (
+        {!pegarProdutos && (
           <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
         )}
       </div>
