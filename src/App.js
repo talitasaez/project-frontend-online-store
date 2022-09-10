@@ -8,12 +8,7 @@ import ShoppingCart from './pages/ShoppingCart';
 export default class App extends React.Component {
   state = {
     produtosNoCarrinho: [],
-    pegarProdutos: [],
   };
-
-  componentDidMount() {
-    this.somarCarrinho();
-  }
 
   adicionarAoCarrinho = (produto) => {
     this.setState((prevState) => ({
@@ -24,14 +19,8 @@ export default class App extends React.Component {
     });
   };
 
-  somarCarrinho = () => {
-    this.setState({
-      pegarProdutos: JSON.parse(localStorage.getItem('produtosNoCarrinho')),
-    });
-  };
-
   render() {
-    const { produtosNoCarrinho, pegarProdutos } = this.state;
+    const { produtosNoCarrinho } = this.state;
     return (
       <BrowserRouter>
         <Switch>
@@ -46,17 +35,7 @@ export default class App extends React.Component {
               />
             ) }
           />
-          <Route
-            path="/cart"
-            render={ (props) => (
-              <ShoppingCart
-                { ...props }
-                pegarProdutos={ pegarProdutos }
-                somarCarrinho={ this.somarCarrinho }
-                adicionarAoCarrinho={ this.adicionarAoCarrinho }
-              />
-            ) }
-          />
+          <Route path="/cart" component={ ShoppingCart } />
           <Route
             path="/produto/:id"
             render={ (props) => (
