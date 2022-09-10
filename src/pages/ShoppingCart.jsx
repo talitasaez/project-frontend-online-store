@@ -110,7 +110,7 @@ export default class ShoppingCart extends Component {
             </button>
           </div>
         ))}
-        {produtosNoCarrinho.length === 0 && (
+        {(!produtosNoCarrinho || produtosNoCarrinho.length === 0) && (
           <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
         )}
       </div>
