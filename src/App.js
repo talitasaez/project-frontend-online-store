@@ -22,12 +22,19 @@ export default class App extends React.Component {
   }
 
   adicionarAoCarrinho = (produto) => {
-    this.setState((prevState) => ({
-      produtosNoCarrinho: [...prevState.produtosNoCarrinho, produto],
-    }), () => {
-      const { produtosNoCarrinho } = this.state;
-      localStorage.setItem('produtosNoCarrinho', JSON.stringify(produtosNoCarrinho));
-    });
+    // const { produtosNoCarrinho } = this.state;
+
+    // const quantidadeAtual = produtosNoCarrinho.map((e) => produto.name === e.name).length;
+    // não passa no teste 13
+
+    if (true) {
+      this.setState((prevState) => ({
+        produtosNoCarrinho: [...prevState.produtosNoCarrinho, produto],
+      }), () => {
+        const { produtosNoCarrinho: produtos } = this.state;
+        localStorage.setItem('produtosNoCarrinho', JSON.stringify(produtos));
+      });
+    }
   };
 
   render() {

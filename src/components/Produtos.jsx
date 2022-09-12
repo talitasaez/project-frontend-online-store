@@ -24,6 +24,8 @@ export default class Produtos extends Component {
               >
                 Adicionar ao carrinho
               </button>
+              {a.shipping.free_shipping
+              && <h4 data-testid="free-shipping">Frete Gratis</h4>}
             </div>
           ))
         }

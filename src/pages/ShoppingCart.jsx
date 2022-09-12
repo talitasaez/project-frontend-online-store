@@ -28,12 +28,18 @@ export default class ShoppingCart extends Component {
   }
 
   adicionarQuantidade = (produto) => {
-    this.setState((prevState) => ({
-      produtosNoCarrinho: [...prevState.produtosNoCarrinho, produto],
-    }), () => {
-      const { produtosNoCarrinho } = this.state;
-      localStorage.setItem('produtosNoCarrinho', JSON.stringify(produtosNoCarrinho));
-    });
+    const { produtosNoCarrinho } = this.state;
+
+    const quantidadeAtual = produtosNoCarrinho.map((e) => produto.name === e.name).length;
+
+    if (quantidadeAtual < produto.available_quantity) {
+      this.setState((prevState) => ({
+        produtosNoCarrinho: [...prevState.produtosNoCarrinho, produto],
+      }), () => {
+        const { produtosNoCarrinho: produtos } = this.state;
+        localStorage.setItem('produtosNoCarrinho', JSON.stringify(produtos));
+      });
+    }
   };
 
   subtrairQuantidade = (indice) => {
