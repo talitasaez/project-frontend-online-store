@@ -19,7 +19,7 @@ export default class ProdutoDetalhado extends Component {
 
   render() {
     const { produto } = this.state;
-    const { adicionarAoCarrinho } = this.props;
+    const { adicionarAoCarrinho, produtosNoCarrinho } = this.props;
 
     return (
       <div>
@@ -36,6 +36,7 @@ export default class ProdutoDetalhado extends Component {
             type="button"
           >
             Carrinho
+            <p data-testid="shopping-cart-size">{ produtosNoCarrinho.length }</p>
           </button>
         </Link>
         <button
@@ -52,6 +53,7 @@ export default class ProdutoDetalhado extends Component {
 }
 
 ProdutoDetalhado.propTypes = {
+  produtosNoCarrinho: PropTypes.arrayOf().isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,

@@ -11,6 +11,16 @@ export default class App extends React.Component {
     produtosNoCarrinho: [],
   };
 
+  componentDidMount() {
+    const produtosGuardados = localStorage.getItem('produtosNoCarrinho');
+
+    if (produtosGuardados) {
+      this.setState({
+        produtosNoCarrinho: JSON.parse(produtosGuardados),
+      });
+    }
+  }
+
   adicionarAoCarrinho = (produto) => {
     this.setState((prevState) => ({
       produtosNoCarrinho: [...prevState.produtosNoCarrinho, produto],
