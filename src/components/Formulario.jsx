@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Formulario extends Component {
   state = {
@@ -15,7 +16,7 @@ export default class Formulario extends Component {
   };
 
   adicionarComentario = () => {
-    const { email, text, rating } = this.state;
+    const { email, text, rating, publicadas } = this.state;
     const { produtoId } = this.props;
 
     const novaPublicacao = {
@@ -25,30 +26,23 @@ export default class Formulario extends Component {
     };
 
     const regex = /\S+@\S+\.\S+/;
-    const data = JSON.parse(localStorage.getItem(produtoId));
+    const data = localStorage.getItem(produtoId);
+    let info = [];
+    if (data) {
+      info = JSON.parse(data);
+    } else {
+      info = publicadas;
+    }
 
-    if (regex.test(email) && rating && data) {
+    if (regex.test(email) && rating) {
       this.setState(() => ({
-        publicadas: [...data, novaPublicacao],
+        publicadas: [...info, novaPublicacao],
+        email: '',
+        text: '',
       }), () => {
-        this.setState({
-          email: '',
-          text: '',
-        });
-        const { publicadas } = this.state;
-        localStorage.setItem(produtoId, JSON.stringify(publicadas));
+        const { publicadas: pub } = this.state;
+        localStorage.setItem(produtoId, JSON.stringify(pub));
       });
-    } else if (regex.test(email) && rating) {
-      this.setState(((prevState) => ({
-        publicadas: [...prevState.publicadas, novaPublicacao],
-      }), () => {
-        this.setState({
-          email: '',
-          text: '',
-        });
-        const { publicadas } = this.state;
-        localStorage.setItem(produtoId, JSON.stringify(publicadas));
-      }));
     }
   };
 
@@ -65,7 +59,7 @@ export default class Formulario extends Component {
   };
 
   render() {
-    const { email, text, verificacao, publicadas, loading } = this.state;
+    const { email, text, verificacao, publicadas } = this.state;
     const { produtoId } = this.props;
     const localData = JSON.parse(localStorage.getItem(produtoId));
 
@@ -188,3 +182,11 @@ export default class Formulario extends Component {
     );
   }
 }
+
+Formulario.propTypes = {
+  produtoId: PropTypes.string,
+};
+
+Formulario.defaultProps = {
+  produtoId: '',
+};
