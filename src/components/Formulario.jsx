@@ -27,7 +27,9 @@ export default class Formulario extends Component {
 
     const regex = /\S+@\S+\.\S+/;
     const data = localStorage.getItem(produtoId);
+
     let info = [];
+
     if (data) {
       info = JSON.parse(data);
     } else {
@@ -37,9 +39,11 @@ export default class Formulario extends Component {
     if (regex.test(email) && rating) {
       this.setState(() => ({
         publicadas: [...info, novaPublicacao],
-        email: '',
-        text: '',
       }), () => {
+        this.setState({
+          email: '',
+          text: '',
+        });
         const { publicadas: pub } = this.state;
         localStorage.setItem(produtoId, JSON.stringify(pub));
       });
