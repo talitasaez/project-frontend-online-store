@@ -30,6 +30,7 @@ export default class ShoppingCart extends Component {
   adicionarQuantidade = (produto) => {
     const { produtosNoCarrinho } = this.state;
 
+    console.log(produto.available_quantity);
     const quantidadeAtual = produtosNoCarrinho.map((e) => produto.name === e.name).length;
 
     if (quantidadeAtual < produto.available_quantity) {
