@@ -9,7 +9,7 @@ export default class Produtos extends Component {
     return (
       <div>
         {
-          produtos.length !== 0 ? produtos.map((a) => (
+          produtos.length !== 0 && produtos.map((a) => (
             <div className="listaDeProdutos" data-testid="product" key={ a.id }>
               <h3>{ a.title }</h3>
               <img src={ a.thumbnail } alt={ a.title } />
@@ -25,7 +25,7 @@ export default class Produtos extends Component {
                 Adicionar ao carrinho
               </button>
             </div>
-          )) : <p>Nenhum produto foi encontrado</p>
+          ))
         }
       </div>
     );
