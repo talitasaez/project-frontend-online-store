@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class ShoppingCart extends Component {
   state = {
@@ -108,8 +109,17 @@ export default class ShoppingCart extends Component {
             >
               Remover
             </button>
+
           </div>
         ))}
+        <Link to="/checkout">
+          <button
+            data-testid="checkout-products"
+            type="button"
+          >
+            Finalizar compra
+          </button>
+        </Link>
         {(!produtosNoCarrinho || produtosNoCarrinho.length === 0) && (
           <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
         )}

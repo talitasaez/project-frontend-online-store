@@ -39,6 +39,9 @@ export default class Home extends Component {
           adicionarAoCarrinho={ adicionarAoCarrinho }
           produtosNoCarrinho={ produtosNoCarrinho }
         />}
+
+        {(produtos.length === 0 && foiPesquisado) && <p>Nenhum produto foi encontrado</p>}
+
         {!foiPesquisado && (
           <p
             data-testid="home-initial-message"

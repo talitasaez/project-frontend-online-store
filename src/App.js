@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Checkout from './pages/Checkout';
 import Home from './pages/Home';
 import ProdutoDetalhado from './pages/ProdutoDetalhado';
 import ShoppingCart from './pages/ShoppingCart';
@@ -43,6 +44,14 @@ export default class App extends React.Component {
                 { ...props }
                 adicionarAoCarrinho={ this.adicionarAoCarrinho }
                 produtosNoCarrinho={ produtosNoCarrinho }
+              />
+            ) }
+          />
+          <Route
+            path="/checkout"
+            render={ (props) => (
+              <Checkout
+                { ...props }
               />
             ) }
           />
