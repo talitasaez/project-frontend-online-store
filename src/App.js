@@ -28,6 +28,7 @@ export default class App extends React.Component {
     // não passa no teste 13
 
     // if (true) {
+
     this.setState((prevState) => ({
       produtosNoCarrinho: [...prevState.produtosNoCarrinho, produto],
     }), () => {
