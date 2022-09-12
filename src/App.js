@@ -25,10 +25,8 @@ export default class App extends React.Component {
     // const { produtosNoCarrinho } = this.state;
 
     // const quantidadeAtual = produtosNoCarrinho.map((e) => produto.name === e.name).length;
-    // não passa no teste 13
 
-    // if (true) {
-
+    // if (quantidadeAtual < produto.available_quantity) {
     this.setState((prevState) => ({
       produtosNoCarrinho: [...prevState.produtosNoCarrinho, produto],
     }), () => {
