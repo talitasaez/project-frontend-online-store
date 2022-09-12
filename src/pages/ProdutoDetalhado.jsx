@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import PropTypes, { shape } from 'prop-types';
 import { getProductById } from '../services/api';
 import Formulario from '../components/Formulario';
 
 export default class ProdutoDetalhado extends Component {
   state = {
     produto: {},
+    freteGratis: false,
   };
 
   async componentDidMount() {
@@ -14,11 +15,17 @@ export default class ProdutoDetalhado extends Component {
 
     const fetchProduto = await getProductById(id);
 
-    this.setState({ produto: fetchProduto });
+    this.setState({
+      produto: fetchProduto,
+    }, () => {
+      const { produto } = this.state;
+
+      this.setState({ freteGratis: produto.shipping.free_shipping });
+    });
   }
 
   render() {
-    const { produto } = this.state;
+    const { produto, freteGratis } = this.state;
     const { adicionarAoCarrinho, produtosNoCarrinho } = this.props;
 
     return (
@@ -46,6 +53,7 @@ export default class ProdutoDetalhado extends Component {
         >
           Adicionar ao carrinho
         </button>
+        {freteGratis && <h4 data-testid="free-shipping">Frete Gratis</h4>}
         <Formulario produtoId={ produto.id } />
       </div>
     );
@@ -53,7 +61,7 @@ export default class ProdutoDetalhado extends Component {
 }
 
 ProdutoDetalhado.propTypes = {
-  produtosNoCarrinho: PropTypes.arrayOf().isRequired,
+  produtosNoCarrinho: PropTypes.arrayOf(shape()).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
