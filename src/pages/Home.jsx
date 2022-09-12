@@ -31,6 +31,7 @@ export default class Home extends Component {
             type="button"
           >
             Carrinho
+            <p data-testid="shopping-cart-size">{produtosNoCarrinho.length}</p>
           </button>
         </Link>
         <Categorias handleSearch={ this.handleSearch } />
